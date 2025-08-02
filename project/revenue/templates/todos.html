@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% block content %}
+<h1> TodoList</h1>
+<ul>
+    {% for item in items %}
+    <li>
+        {{ item.company }}: {{item.frc}}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
