@@ -1,33 +1,81 @@
+{% load static tailwind_tags %}
+
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      {% block title %}
-        Django App
-      {% endblock %}
-    </title>
-    <link href="../static/output.css" rel="stylesheet">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">My Django App</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <div class="container">{% block content %} {% endblock %}</div>
-  </body>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Мой сайт{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% tailwind_css %}
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function () {
+            const btn = document.getElementById('menu-button');
+            const menu = document.getElementById('mobile-menu');
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+        });
+    </script>
+</head>
+
+<body class="min-h-screen flex flex-col text-gray-300 bg-[linear-gradient(70deg,_#0a0a0a,_#1f2937,_#0a0a0a)]">
+
+    <!-- Header -->
+    <header class="bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="text-xl font-bold">
+                <a href="{% url 'home' %}">Логотип</a>
+            </div>
+            {% with request.resolver_match.url_name as url_name %}
+                <nav class="hidden md:flex space-x-4">
+                    <a href="{% url 'home' %}"
+                    class="{% if url_name == 'home' %} bg-gray-700 cursor-default border border-gray-500{% else %}bg-gray-800 hover:bg-gray-600 {% endif %}
+                            px-4 py-2 rounded-lg text-white transition duration-300">
+                        Главная
+                    </a>
+                    <a href="{% url 'todos' %}"
+                    class="{% if url_name == 'todos' %}bg-gray-700 cursor-default border border-gray-500{% else %}bg-gray-800 hover:bg-gray-600 {% endif %}
+                             px-4 py-2 rounded-lg text-white transition duration-300">
+                        О нас
+                    </a>
+                    <!-- и т.д. -->
+                </nav>
+            {% endwith %}
+
+            <!-- <nav class="hidden md:flex space-x-4">
+                <span class="bg-gray-800 px-4 py-2 rounded-lg font-semibold cursor-default">Главная</span>
+                <a href="{% url 'home' %}" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg transition duration-300">Главная</a>
+                <a href="{% url 'home' %}" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg transition duration-300">Главная</a>
+            </nav> -->
+
+            <button id="menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6 text-gray-200" fill="none" stroke="currentColor" stroke-width="2"
+                     viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="md:hidden hidden px-4 pb-4">
+            {% with request.resolver_match.url_name as url_name %}
+                <a href="{% url 'home' %}" class="{% if url_name == 'home' %}bg-gray-800 cursor-default{% else %}bg-gray-700 hover:bg-gray-600{% endif %} block bg-gray-700 hover:bg-gray-600 px-4 py-2 mt-2 rounded-lg transition duration-300">Главная</a>
+                <a href="{% url 'todos' %}" class="{% if url_name == 'todos' %}bg-gray-800 cursor-default{% else %}bg-gray-700 hover:bg-gray-600{% endif %} block bg-gray-700 hover:bg-gray-600 px-4 py-2 mt-2 rounded-lg transition duration-300">О нас</a>
+            {% endwith %}
+        </div>
+    </header>
+
+    <!-- Контент -->
+    <main class="flex-grow w-full px-4 md:px-8 mt-6 mb-10 rounded-xl shadow-md max-w-7xl self-center p-6
+    bg-[linear-gradient(-20deg,_#2d3748_0%,_#1f2937_25%,_#1a202c_50%,_#1f2937_75%,_#2d3748_100%)]
+    opacity-0 animate-gradient-fade-in">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-200 py-4 text-center mt-auto">
+        &copy; {% now "Y" %} АО "РТ-Техприемка"
+    </footer>
+
+</body>
 </html>

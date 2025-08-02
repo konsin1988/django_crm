@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-import psycopg
+import psycopg2
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -43,11 +43,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'revenue',
+    'tailwind',
+    'theme',
+    'django_browser_reload'
 ]
 
-
-# STATIC_URL = '/static/'         # tailwind
-# STATICFILES_DIRS = [BASE_DIR / 'static']
+# tailwind activation
+TAILWIND_APP_NAME = 'theme'
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_browser_reload.middleware.BrowserReloadMiddleware'
 ]
 
 ROOT_URLCONF = 'project.urls'
