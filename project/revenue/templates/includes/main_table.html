@@ -1,0 +1,50 @@
+<div class="w-full overflow-x-auto bg-transparent p-2 max-w-screen">
+  <form method="post" class="min-w-full">
+    {% csrf_token %}
+    <div class="inline-block min-w-full overflow-hidden rounded-2xl shadow-md"></div>
+      <table class="table-auto justify-center w-full border-collapse border border-gray-500 text-[9px] sm:text-[10px] md:text-xs">
+        <thead>
+          <tr>
+            <th class="border border-gray-600 px-1 py-2 bg-gray-800 text-gray-200 text-center whitespace-nowrap" rowspan="2">Показатель</th>
+            {% for month in months %}
+              <th class="border border-gray-600 px-0.5 py-0.5 text-center text-gray-200 whitespace-nowrap
+                        {% cycle 'bg-gray-700' 'bg-gray-600' 'bg-gray-500' %}" colspan="2">
+                {{ month }}
+              </th>
+            {% endfor %}
+          </tr>
+          <tr>
+            {% for month in months %}
+              <th class="border border-gray-600 px-0.5 py-0.5 bg-gray-700 text-center text-gray-200 whitespace-nowrap">План</th>
+              <th class="border border-gray-600 px-0.5 py-0.5 bg-gray-700 text-center text-gray-200 whitespace-nowrap">Прогноз</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+            <tr>
+              <td class="border border-gray-600 px-1 py-2 bg-gray-800 text-gray-200 text-center whitespace-nowrap">{{ row }}</td>
+              {% for month in months %}
+                <td class="border border-gray-600 px-0.5 py-0.5 whitespace-nowrap">
+                  <input type="text" name="{{ row }}_{{ month }}_plan"
+                        class="border border-gray-400 rounded px-0.5 py-0.5 text-[9px] sm:text-[10px] md:text-xs w-[60px]" />
+                </td>
+                <td class="border border-gray-600 px-0.5 py-0.5 whitespace-nowrap">
+                  <input type="text" name="{{ row }}_{{ month }}_forecast"
+                        class="border border-gray-400 rounded px-0.5 py-0.5 text-[9px] sm:text-[10px] md:text-xs w-[60px]" />
+                </td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="mt-4 text-center">
+        <button type="submit"
+                class="bg-gray-700 hover:bg-gray-800 text-gray-200 px-3 py-1 rounded border border-transparent hover:border-gray-200 transition text-[10px] sm:text-xs md:text-sm">
+          Сохранить
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

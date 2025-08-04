@@ -2,15 +2,15 @@ from django.shortcuts import render
 from django.db.models import Q
 
 from .models import RevenueEst2025
-# Create your views here.
-
-# def home(request):
-#     items = RevenueEst2025.objects.all().using('fin')
-#     return render(request, "todos.html", {"items": items})
 
 def home(request):
-    return render(request, "base.html")
+    months = [
+        "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
+        "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+    ]
+    rows = ["Выручка", "Контракт", "ВСК", "Прогноз"]
+    return render(request, "home.html", {"months": months, "rows": rows})
 
 def todos(request):
-    items = RevenueEst2025.objects.all().using('fin')
+    items = RevenueEst2025.objects.filter(date_dt__year=2025).using('fin')
     return render(request, "todos.html", {"items": items})

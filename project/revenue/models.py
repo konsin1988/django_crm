@@ -23,7 +23,7 @@ class RevenueEst2025(models.Model):
     contr_amount = models.DecimalField(max_digits=10, decimal_places=5, blank=True, null=True)  # max_digits and decimal_places have been guessed, as this database handles decimal fields as float
 
     def __str__(self):
-        return self.name
+        return self.company
 
     class Meta:
         managed = False
@@ -43,7 +43,7 @@ class RevenueFact(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=5, blank=True, null=True)  # max_digits and decimal_places have been guessed, as this database handles decimal fields as float
 
     def __str__(self):
-        return self.name
+        return self.doc
 
     class Meta:
         managed = False
@@ -57,7 +57,7 @@ class RevenuePlan2025(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=5, blank=True, null=True)  # max_digits and decimal_places have been guessed, as this database handles decimal fields as float
 
     def __str__(self):
-        return self.name    
+        return self.company    
 
     class Meta:
         managed = False
